@@ -17,6 +17,7 @@ class Response {
      * @visibility: public
      * @var $isError: boolean => checks if following response is a error
      * @var $res_code: string => gives response code
+     * @return boolean
      **/
     public function createResponse($res_code, $data = false) {
         $this->rb = new ResponseBuilder($res_code);

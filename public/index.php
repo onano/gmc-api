@@ -8,17 +8,14 @@ require_once $_SERVER['DOCUMENT_ROOT'] . "/helpers/ResponseHelper.php";
 $app = new AltoRouter();
 $app->setBasePath('');
 
-
 /// route handler
 $app->map('GET', '/', $_SERVER['DOCUMENT_ROOT'] . '/controllers/index.php');
-
-
+$app->map('POST', '/user/signup', $_SERVER['DOCUMENT_ROOT'] . '/controllers/user.php');
 
 /**
  * @var match: boolean
- *
  * @function match: boolean => checks if request route 
- * is defined 
+ * is defined
  **/
 $match = $app->match();
 
@@ -30,7 +27,7 @@ if ($match) {
     if ($res) {
         $response->sendResponse();
     } else {
-        echo json_encode(array("error" => "true", "message" => "Unknown Error"));
+        echo json_encode(array("error" => "true", "message" => "Unable to create response"));
     }
 }
 
