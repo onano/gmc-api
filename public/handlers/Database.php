@@ -6,11 +6,14 @@ class Database {
     /**
      * @var $conn: type Mysqli
      **/
+
     private $conn = null;
+    private $stmt = null;
 
     /**
      * @__construct: establishes a new Connection to db
      **/
+
     function __construct() {
         $this->conn = new mysqli(
             DatabaseHelper::DB_HOST,
@@ -27,23 +30,47 @@ class Database {
         return $this->conn ? true : false;
     }
 
-    public function exec_query($query) {
-        $stmt = $this->conn->prepare($query);
-        $ret = $stmt->execute();
-        $stmt->close();
+    public function prepare($query) {
+        $this->stmt = $this->conn->prepare($query);
+        if ($this->stmt) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function set_params($sql_str, ...$params) {
+        // bind the sql string
+        $bind_args = array();
+        $bind_args[] = $sql_str;
+
+        foreach ($params as $param_key => $param_val) {
+            $bind_args[] = & $param_val[$param_key]; // pass the reference to bind_Args
+        }
+
+        if (call_user_func_array(array($this->stmt, 'bind_param'), $bind_args)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function exec_query() {
+        $ret = $this->stmt->execute();
+        $this->stmt->close();
         return $ret ? $ret : false;
     }
 
-    public function exec_query_array($query) {
-        $stmt = $this->conn->prepare($query);
-        $ret = $stmt->execute();
+    public function exec_query_array() {
+
+        $ret = $this->stmt->execute();
         if ($ret) {
-            $stmt->store_result();
+            $this->stmt->store_result();
             $response = array();
-            while($r = $this->getResultByArray($stmt)) {
+            while($r = $this->getResultByArray($this->stmt)) {
                 $response[] = $r;
             }
-            $stmt->close();
+            $this->stmt->close();
             
             return $response;
         } else {

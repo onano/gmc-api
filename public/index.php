@@ -4,6 +4,7 @@
 require_once $_SERVER['DOCUMENT_ROOT'] . "/vendor/AltoRouter.php";
 require_once $_SERVER['DOCUMENT_ROOT'] . "/handlers/Response.php";
 require_once $_SERVER['DOCUMENT_ROOT'] . "/helpers/ResponseHelper.php";
+
 // init router
 $app = new AltoRouter();
 $app->setBasePath('');

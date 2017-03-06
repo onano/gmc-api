@@ -8,11 +8,12 @@ function main() {
     $category = $_POST['category'];
     $email = $_POST['email'];
     $mobile = $_POST['mobile'];
+    //$login=$_POST['login']; // @boolean
 
     // create user
-    $user = new User($name, $email, $mob, $pass, $category);
+    $user = new User($name, $email, $mobile, $passwd, $category);
+    $response = new Response();
     if ($user->save()) {
-        $response = new Response();
         $res = $response->createResponse(ResponseHelper::HTTP_200);
         if ($res) {
             $response->sendResponse();
@@ -27,7 +28,5 @@ function main() {
             echo json_encode(array("error" => "true", "message" => "Unable to send response"));
         }
     }
-    
 }
-
 main();

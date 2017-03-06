@@ -20,7 +20,7 @@ class User {
         $this->email = $email;
     }
 
-    private function getuuid($category) {
+    private function get_uuid($category) {
         $randNum = mt_rand(9999, 1000000);
         $prefix = '';
         switch ($category) {
@@ -42,12 +42,20 @@ class User {
 
     public function save() {
         $db = new Database();
-        $uuid = $this->getuuid($this->category);
-        $query = "INSERT INTO users(uid, name, email, mobile , password,  created_at) VALUES($uuid, $this->name, $this->email, $this->mobile, $this->password, NOW())";
+        $uuid = $this->get_uuid($this->category);
+        $query = "INSERT INTO users(uid, name, email, mobile, password, created_at) VALUES(?, ?, ?, ?, ?, NOW())";
+        $sql_str = "sssss";
         if ($db->connect()) {
-            $ret = $db->exec_query($query);
-            if ($ret) {
-                return $ret;
+            if ($db->prepare($query)) {
+                if ($db->set_params($sql_str, $uuid, $this->name, $this->email, $this->mobile, $this->password)) {
+                    if($db->exec_query()) {
+                        return true;
+                    } else {
+                       return false;
+                    }
+                } else {
+                    return false;
+                }
             } else {
                 return false;
             }
