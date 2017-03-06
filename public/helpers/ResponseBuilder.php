@@ -34,7 +34,10 @@ class ResponseBuilder {
                 return $this->setResponse(false, ResponseHelper::HTTP_200_MSG);
                 break;
             case ResponseHelper::HTTP_405:
-                return $this->setResponse(false, ResponseHelper::HTTP_405_MSG);
+                return $this->setResponse(true, ResponseHelper::HTTP_405_MSG);
+                break;
+            case ResponseHelper::HTTP_409:
+                return $this->setResponse(true, ResponseHelper::HTTP_409_MSG);
                 break;
             default:
                 return $this->setResponse(true, ResponseHelper::HTTP_500_MSG);
