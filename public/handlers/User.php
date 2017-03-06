@@ -12,12 +12,7 @@ class User {
     private $name = null;
     private $email = null;
 
-    function __construct($name, $email, $mob, $pass, $cat) {
-        $this->mobile = $mob;
-        $this->password = $pass;
-        $this->category = $cat;
-        $this->name = $name;
-        $this->email = $email;
+    function __construct() {
     }
 
     private function get_uuid($category) {
@@ -38,6 +33,38 @@ class User {
                 break;
         }
         return $prefix . $randNum;
+    }
+
+    public function create_new_user($name, $email, $mob, $pass, $cat) {
+        $this->mobile = $mob;
+        $this->password = $pass;
+        $this->category = $cat;
+        $this->name = $name;
+        $this->email = $email;
+    }
+
+    public function findUserByMobile($mobile) {
+        $db = new Database();
+        $query = "SELECT * FROM users WHERE mobile = ?";
+        $sql_str = "s";
+        if ($db->connect()) {
+            if ($db->prepare($query)) {
+                if ($db->set_params($sql_str, $mobile)){
+                    $ret = $db->exec_query_array();
+                    if ($ret) {
+                        return $ret;
+                    } else {
+                        return false;
+                    }
+                } else {
+                    return false;
+                }
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
     }
 
     public function save() {

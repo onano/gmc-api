@@ -15,7 +15,6 @@ class ResponseHelper {
     const HTTP_500 = 500;
     const HTTP_200 = 200;
     const HTTP_405 = 405;
-
     const HTTP_404_MSG = 'Error, File Not Found';
     const HTTP_401_MSG = 'Error, Unauthorized Access';
     const HTTP_405_MSG = 'Error, Unable to connect database';

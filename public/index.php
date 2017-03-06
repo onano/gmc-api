@@ -11,7 +11,9 @@ $app->setBasePath('');
 
 /// route handler
 $app->map('GET', '/', $_SERVER['DOCUMENT_ROOT'] . '/controllers/index.php');
-$app->map('POST', '/user/signup', $_SERVER['DOCUMENT_ROOT'] . '/controllers/user.php');
+$app->map('POST', '/user/signup', $_SERVER['DOCUMENT_ROOT'] . '/controllers/user-signup.php');
+$app->map('POST', '/user/signin', $_SERVER['DOCUMENT_ROOT'] . '/controllers/user-signin.php');
+
 
 /**
  * @var match: boolean
