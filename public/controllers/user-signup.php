@@ -17,7 +17,7 @@ function main() {
     // checking if user already exists
     $ret  = $user->findUserByMobile($mobile);
     if ($ret) {
-        $res = $response->sendResponse(ResponseHelper::HTTP_409);
+        $res = $response->createResponse(ResponseHelper::HTTP_409);
         if ($res) {
             $response->sendResponse();
             return;
