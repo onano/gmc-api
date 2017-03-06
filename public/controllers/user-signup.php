@@ -10,11 +10,25 @@ function main() {
     $email = $_POST['email'];
     $mobile = $_POST['mobile'];
 
-    // create user
+    // objects
     $user = new User();
+    $response = new Response();
+
+    // checking if user already exists
+    $ret  = $user->findUserByMobile($mobile);
+    if ($ret) {
+        $res = $response->sendResponse(ResponseHelper::HTTP_409);
+        if ($res) {
+            $response->sendResponse();
+            return;
+        } else {
+            echo json_encode(array("error" => "true", "message" => "Unable to send response"));
+            return;
+        }
+    }
+
     // create a new user
     $user->create_new_user($name, $email, $mobile, $passwd, $category);
-    $response = new Response();
     if ($user->save()) {
         $res = $response->createResponse(ResponseHelper::HTTP_200);
         if ($res) {

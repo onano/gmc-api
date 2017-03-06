@@ -13,9 +13,11 @@ class ResponseBuilder {
         $this->resCode = $resCode;
     }
 
-    // @ret boolean
+    /**
+     * @param bool $data
+     * @return bool
+     */
     public function prepare($data = false) {
-        
         // setup data
         $this->data = $data ? $data : false;
 
@@ -45,6 +47,11 @@ class ResponseBuilder {
         }
     }
 
+    /**
+     * @param $isError
+     * @param $msg
+     * @return bool
+     */
     private function setResponse($isError, $msg) {
         $this->__response["error"] = $isError;
         $this->__response["message"] = $msg;
@@ -54,10 +61,16 @@ class ResponseBuilder {
         return ($this->__response["error"] === $isError) ? true : false;
     }
 
+    /**
+     * @return array|bool
+     */
     private function getResponse() {
         return ($this->__response) ? $this->__response : false;
     }
 
+    /**
+     *
+     */
     public function send() {
         $ret = $this->getResponse();
         if ($ret) {
