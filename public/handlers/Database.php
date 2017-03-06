@@ -45,7 +45,7 @@ class Database {
         $bind_args[] = $sql_str;
 
         foreach ($params as $param_key => $param_val) {
-            $bind_args[] = & $param_val[$param_key]; // pass the reference to bind_Args
+            $bind_args[] = &$params[$param_key]; // pass the reference to bind_Args
         }
 
         if (call_user_func_array(array($this->stmt, 'bind_param'), $bind_args)) {
