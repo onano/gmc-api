@@ -8,7 +8,6 @@ function main() {
     $category = $_POST['category'];
     $email = $_POST['email'];
     $mobile = $_POST['mobile'];
-    //$login=$_POST['login']; // @boolean
 
     // create user
     $user = new User($name, $email, $mobile, $passwd, $category);
